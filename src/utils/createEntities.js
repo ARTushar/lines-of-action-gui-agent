@@ -1,0 +1,5 @@
+
+const createDefaultEntities = () => {
+    const entities = {};
+    
+}
