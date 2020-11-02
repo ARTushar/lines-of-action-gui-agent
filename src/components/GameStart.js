@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function GameStart() {
-  const [isOpen, setIsOpen] = useState(true);
+function GameStart({isOpen, setIsOpen}) {
   const [firstName, setFirstName] = useState('');
   const [secondName, setSecondName] = useState('');
   const [boardSize, setBoardSize] = useState(8);

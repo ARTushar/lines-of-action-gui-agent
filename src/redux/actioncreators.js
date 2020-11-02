@@ -56,3 +56,9 @@ export const startGame = (firstPlayerName, secondPlayerName, boardSize) => (disp
   dispatch(setPlayerNames(firstPlayerName, secondPlayerName));
   dispatch(createBoard(boardSize));
 }
+
+export const finishGame = (winner, totalTimeTaken) => ({
+  type: ActionTypes.FINISH_GAME,
+  winner,
+  totalTimeTaken
+})

@@ -1,13 +1,17 @@
 import { Grid, Paper } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import Board from './Board';
 import GameDisplay from './GameDisplay';
 import GameStart from './GameStart';
+import GameFinish from './GameFinish';
 
 function Main() {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
     <div >
-      <GameStart />
+      <GameStart isOpen={isOpen} setIsOpen={setIsOpen} />
+      <GameFinish setGameStart={setIsOpen} />
       <Paper style={{
       minHeight: '100vh',
       padding: '20px'

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AdjustIcon from '@material-ui/icons/Adjust';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { highlightAvailableMoves, move } from '../redux/actioncreators';
+import { finishGame, highlightAvailableMoves, move } from '../redux/actioncreators';
 import { useDispatch, useSelector } from 'react-redux';
 import { getValidMoves } from '../game-logic/validMoves';
+import { getWinner } from '../game-logic/winningLogic';
 
 const useStyles = makeStyles((theme) => ({
   cellButton: {
@@ -61,7 +62,7 @@ function Cell(props) {
     color = 'disabled';
   }
 
-
+  
 
   const handleClick = () => {
     if(isHighlighted){

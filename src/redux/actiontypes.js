@@ -13,7 +13,7 @@ export const MOVE = 'MOVE'
 
 
 /**
- * 
+ * timer
  */
 
 export const RESET_TIMER = 'RESET_TIMER';
@@ -21,8 +21,9 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 
 /**
- * 
+ * game
  */
 
 export const SET_PLAYER_NAMES = 'SET_PLAYER_NAMES';
 export const SET_TOTAL_TIME = 'SET_TOTAL_TIME';
+export const FINISH_GAME = 'FINISH_GAME';
