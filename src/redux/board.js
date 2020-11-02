@@ -1,5 +1,4 @@
 import * as ActionTypes from './actiontypes';
-import { getValidMoves } from '../game-logic/validMoves';
 import {createBoard, getOpposition} from '../game-logic/boardUitls';
 
 const defaultBoardSize = 8;

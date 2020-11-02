@@ -23,6 +23,8 @@ const Timer = (state = {
         startedAt: state.startedAt ? action.now: null,
         stoppedAt: state.stoppedAt ? action.now: null
       }
+    default:
+      return state;
   }
 }
 

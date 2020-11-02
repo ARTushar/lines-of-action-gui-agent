@@ -17,6 +17,10 @@ export const move = (row, col) => ({
   col
 })
 
+export const createBoard = (boardSize) => ({
+  type: ActionTypes.RESET_BOARD,
+  boardSize
+})
 
 /**
  * timer
@@ -37,3 +41,18 @@ export const resetTimer = () => ({
   type: ActionTypes.RESET_TIMER,
   now: new Date()
 })
+
+/**
+ * game 
+ */
+
+export const setPlayerNames = (firstPlayerName, secondPlayerName) => ({
+  type: ActionTypes.SET_PLAYER_NAMES,
+  firstPlayerName,
+  secondPlayerName
+})
+
+export const startGame = (firstPlayerName, secondPlayerName, boardSize) => (dispatch) => {
+  dispatch(setPlayerNames(firstPlayerName, secondPlayerName));
+  dispatch(createBoard(boardSize));
+}
