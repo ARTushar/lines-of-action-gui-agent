@@ -16,3 +16,24 @@ export const move = (row, col) => ({
   row,
   col
 })
+
+
+/**
+ * timer
+ */
+
+export const startTimer = (baseTime = 0) => ({
+  type: ActionTypes.START_TIMER,
+  baseTime,
+  now: new Date()
+})
+
+export const stopTimer = () => ({
+  type: ActionTypes.STOP_TIMER,
+  now: new Date()
+})
+
+export const resetTimer = () => ({
+  type: ActionTypes.RESET_TIMER,
+  now: new Date()
+})
