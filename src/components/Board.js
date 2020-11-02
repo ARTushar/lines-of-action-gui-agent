@@ -1,7 +1,6 @@
 import { ButtonGroup } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Box from './Box';
 import Grid from '@material-ui/core/Grid';
 import Cell from './Cell';
 

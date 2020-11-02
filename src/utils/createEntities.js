@@ -1,5 +1,0 @@
-
-const createDefaultEntities = () => {
-    const entities = {};
-    
-}
