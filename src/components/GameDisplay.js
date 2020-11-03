@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, makeStyles, Paper, TextField,  } from '@material-ui/core'
+import { Grid, makeStyles, Paper, TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { finishGame } from '../redux/actioncreators';
+import { finishGame, stopTimer } from '../redux/actioncreators';
 import { getWinner } from '../game-logic/winningLogic';
 // import { startTimer } from '../redux/actioncreators';
 
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GameDisplay() {
+function GameDisplay({setIsOpen}) {
   const classes = useStyles();
 
   const {firstPlayerName, secondPlayerName} = useSelector(state => state.game)
@@ -32,6 +32,7 @@ function GameDisplay() {
 
   const { board, currentPlayer, latestBlackMove, latestWhiteMove, totalBlackCells, totalWhiteCells } = useSelector(state => state.board);
   const winner = useSelector(state => state.game.winner);
+  const {startedAt, stoppedAt} = useSelector(state => state.timer);
 
   const dispatch = useDispatch();
   const minute = Math.floor(elapsedTime / 60);
@@ -39,6 +40,12 @@ function GameDisplay() {
 
   const getCurrentTurn = (player) =>{
     return player === 'black' ? firstPlayerName.toUpperCase(): secondPlayerName.toUpperCase();
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsOpen(true);
+    dispatch(stopTimer());
   }
 
   useEffect(() => {
@@ -59,22 +66,22 @@ function GameDisplay() {
     let winner = getWinner(board, lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells)
     console.log(winner);
     if(winner){
+      dispatch(stopTimer());
       dispatch(finishGame(winner, elapsedTime))
     }
   }, [currentPlayer])
 
   useEffect(() => {
     let timer;
-    if(firstPlayerName && !winner.length){
-      // dispatch(startTimer());
+    if(startedAt && !stoppedAt){
       timer = setInterval(() => setElapsedTime(elapsedTime + 1), 1000)
-    } else if(winner.length){
+    } else {
       setElapsedTime(0);
     }
     return () => {
       if(timer) clearInterval(timer);
     }
-  }, [elapsedTime, firstPlayerName, winner])
+  }, [elapsedTime, startedAt, stoppedAt])
 
   return (
     <Paper elevation={3} className={classes.paper}>
@@ -85,6 +92,7 @@ function GameDisplay() {
       <Grid container direction="row" justify="center" alignItems="center">
         <form
           className={classes.root}
+          onSubmit={handleSubmit}
         >
           <Grid item>
             <TextField
@@ -112,6 +120,16 @@ function GameDisplay() {
                 readOnly: true
               }}
             />
+          </Grid>
+          <Grid item align="center">
+            <Button
+              size='small'
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
+              Quit the play
+            </Button>
           </Grid>
         </form>
       </Grid>

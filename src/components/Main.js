@@ -22,15 +22,15 @@ function Main() {
         LINES OF CODE
       </h2>
       <Grid container justify="center">
-          <Grid item align="right" xs={6} style={{
+          <Grid item align="right" md={6} style={{
             paddingRight: '50px'
           }}>
             <Board />
           </Grid>
-          <Grid item  xs={4} style={{
+          <Grid item  md={6} style={{
             padding: '15px 20px 20px 30px'
           }}>
-            <GameDisplay />
+            <GameDisplay setIsOpen={setIsOpen} />
           </Grid>
         </Grid>
       </Paper>

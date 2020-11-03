@@ -26,9 +26,8 @@ export const createBoard = (boardSize) => ({
  * timer
  */
 
-export const startTimer = (baseTime = 0) => ({
+export const startTimer = () => ({
   type: ActionTypes.START_TIMER,
-  baseTime,
   now: new Date()
 })
 
@@ -38,8 +37,7 @@ export const stopTimer = () => ({
 })
 
 export const resetTimer = () => ({
-  type: ActionTypes.RESET_TIMER,
-  now: new Date()
+  type: ActionTypes.RESET_TIMER
 })
 
 /**
@@ -55,6 +53,7 @@ export const setPlayerNames = (firstPlayerName, secondPlayerName) => ({
 export const startGame = (firstPlayerName, secondPlayerName, boardSize) => (dispatch) => {
   dispatch(setPlayerNames(firstPlayerName, secondPlayerName));
   dispatch(createBoard(boardSize));
+  dispatch(startTimer());
 }
 
 export const finishGame = (winner, totalTimeTaken) => ({

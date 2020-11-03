@@ -1,6 +1,6 @@
 import { Button, Grid, makeStyles, Modal, Paper, } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 const getWinnerName = (winner, firstPlayerName, secondPlayerName) => {
