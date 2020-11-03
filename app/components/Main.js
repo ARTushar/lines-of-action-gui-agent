@@ -17,7 +17,8 @@ function Main() {
       padding: '20px'
     }} elevation={3}>
       <h2 style={{
-        marginBottom: '50px'
+        marginBottom: '50px',
+        textAlign: 'center'
       }}>
         LINES OF CODE
       </h2>

@@ -92,7 +92,9 @@ function GameDisplay({ setIsOpen }) {
   return (
     <Paper elevation={3} className={classes.paper}>
       {firstPlayerName.length !== 0 ? (
-        <h3>{winner.length === 0 ? getCurrentTurn(currentPlayer) + "'s Turn" : getCurrentTurn(winner) + ' WON!!!!'}</h3>
+        <h3 style={{
+          textAlign: 'center',
+        }}>{winner.length === 0 ? getCurrentTurn(currentPlayer) + "'s Turn" : getCurrentTurn(winner) + ' WON!!!!'}</h3>
       ) : (null)
       }
       <Grid container direction="row" justify="center" alignItems="center">

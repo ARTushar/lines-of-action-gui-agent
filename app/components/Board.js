@@ -29,7 +29,7 @@ function Board() {
     <div style={{
     }}>
       <Grid 
-        ontainer 
+        container 
         justify="center"
       >
       {boardUI}
