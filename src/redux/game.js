@@ -3,6 +3,8 @@ import * as ActionTypes from './actiontypes';
 const Game = (state = {
   firstPlayerName: '',
   secondPlayerName: '',
+  firstPlayerType: '',
+  secondPlayerType: '',
   totalTimeTaken: null,
   winner: ''
 }, action) => {
@@ -12,6 +14,8 @@ const Game = (state = {
         ...state,
         firstPlayerName: action.firstPlayerName,
         secondPlayerName: action.secondPlayerName,
+        firstPlayerType: action.firstPlayerType,
+        secondPlayerType: action.secondPlayerType,
         winner: '',
         totalTimeTaken: null
       }

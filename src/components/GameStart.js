@@ -1,7 +1,8 @@
-import { Button, Grid, makeStyles, MenuItem, Modal, Paper, Select, TextField, FormControl, InputLabel } from '@material-ui/core';
+import { Button, Grid, makeStyles, MenuItem, Modal, Paper, Select, TextField, FormControl, InputLabel, Input } from '@material-ui/core';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { startGame } from '../redux/actioncreators';
+import Upload from 'rc-upload';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,13 +27,18 @@ const useStyles = makeStyles((theme) => ({
   },
   select: {
     minWidth: '100px'
+  },
+  input: {
+    marginLeft: '10px'
   }
 }));
 
 
 function GameStart({isOpen, setIsOpen}) {
-  const [firstName, setFirstName] = useState('');
-  const [secondName, setSecondName] = useState('');
+  const [firstName, setFirstName] = useState('Player 1');
+  const [secondName, setSecondName] = useState('Player 2');
+  const [firstType, setFirstType] = useState('human');
+  const [secondType, setSecondType] = useState('human');
   const [boardSize, setBoardSize] = useState(8);
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -40,8 +46,13 @@ function GameStart({isOpen, setIsOpen}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(firstName, secondName, boardSize);
-    dispatch(startGame(firstName, secondName, boardSize));
+    dispatch(startGame(firstName, secondName, firstType, secondType, boardSize));
     setIsOpen(false);
+  }
+
+  const handleFileUpload = (e) => {
+    e.preventDefault();
+    console.log(e.target.files[0]);
   }
 
   return (
@@ -55,10 +66,34 @@ function GameStart({isOpen, setIsOpen}) {
           className={classes.root}
           onSubmit={handleSubmit}
         >
+          <Grid item className={classes.selectItem}>
+            <FormControl className={classes.select}>
+            <InputLabel>Player 1 Type</InputLabel>
+            <Select
+              value={firstType}
+              onChange={e => setFirstType(e.target.value)}
+            >
+              <MenuItem value={'human'}>Human</MenuItem>
+              <MenuItem value={'bot'}>Bot</MenuItem>
+            </Select>
+            </FormControl>
+          </Grid>
+          <Grid item className={classes.selectItem}>
+            <FormControl className={classes.select}>
+            <InputLabel>Player 2 Type</InputLabel>
+            <Select
+              value={secondType}
+              onChange={e => setSecondType(e.target.value)}
+            >
+              <MenuItem value={'human'}>Human</MenuItem>
+              <MenuItem value={'bot'}>Bot</MenuItem>
+            </Select>
+            </FormControl>
+          </Grid>
           <Grid item>
             <TextField
               required
-              label='First Player Name'
+              label='Player 1 Name'
               value={firstName}
               onChange={e => setFirstName(e.target.value)}
             />
@@ -66,7 +101,7 @@ function GameStart({isOpen, setIsOpen}) {
           <Grid item>
             <TextField
               required
-              label='Second Player Name'
+              label='Player 2 Name'
               value={secondName}
               onChange={e => setSecondName(e.target.value)}
             />
@@ -77,7 +112,6 @@ function GameStart({isOpen, setIsOpen}) {
             <Select
               value={boardSize}
               onChange={e => setBoardSize(e.target.value)}
-              label='Board Size'
             >
               <MenuItem value={8}>8</MenuItem>
               <MenuItem value={6}>6</MenuItem>

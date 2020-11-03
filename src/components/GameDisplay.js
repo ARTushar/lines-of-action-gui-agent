@@ -4,6 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { finishGame, stopTimer } from '../redux/actioncreators';
 import { getWinner } from '../game-logic/winningLogic';
 // import { startTimer } from '../redux/actioncreators';
+import fs from 'fs';
+
+const text = fs.readdirSync('../bot/temp.txt');
+console.log(text + 'hello world');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,22 +28,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function GameDisplay({setIsOpen}) {
+function GameDisplay({ setIsOpen }) {
   const classes = useStyles();
 
-  const {firstPlayerName, secondPlayerName} = useSelector(state => state.game)
+  const { firstPlayerName, secondPlayerName } = useSelector(state => state.game)
   const [elapsedTime, setElapsedTime] = useState(0);
 
   const { board, currentPlayer, latestBlackMove, latestWhiteMove, totalBlackCells, totalWhiteCells } = useSelector(state => state.board);
   const winner = useSelector(state => state.game.winner);
-  const {startedAt, stoppedAt} = useSelector(state => state.timer);
+  const { startedAt, stoppedAt } = useSelector(state => state.timer);
 
   const dispatch = useDispatch();
   const minute = Math.floor(elapsedTime / 60);
   const sec = elapsedTime % 60;
 
-  const getCurrentTurn = (player) =>{
-    return player === 'black' ? firstPlayerName.toUpperCase(): secondPlayerName.toUpperCase();
+  const getCurrentTurn = (player) => {
+    return player === 'black' ? firstPlayerName.toUpperCase() : secondPlayerName.toUpperCase();
   }
 
   const handleSubmit = (e) => {
@@ -49,9 +53,9 @@ function GameDisplay({setIsOpen}) {
   }
 
   useEffect(() => {
-    if(!latestBlackMove || !latestWhiteMove) return;
+    if (!latestBlackMove || !latestWhiteMove) return;
     let lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells;
-    if(currentPlayer === 'white'){
+    if (currentPlayer === 'white') {
       lastMoveByCurrent = latestBlackMove;
       currentCells = totalBlackCells;
       lastMoveByOpposition = latestWhiteMove;
@@ -65,7 +69,7 @@ function GameDisplay({setIsOpen}) {
 
     let winner = getWinner(board, lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells)
     console.log(winner);
-    if(winner){
+    if (winner) {
       dispatch(stopTimer());
       dispatch(finishGame(winner, elapsedTime))
     }
@@ -73,13 +77,13 @@ function GameDisplay({setIsOpen}) {
 
   useEffect(() => {
     let timer;
-    if(startedAt && !stoppedAt){
+    if (startedAt && !stoppedAt) {
       timer = setInterval(() => setElapsedTime(elapsedTime + 1), 1000)
     } else {
       setElapsedTime(0);
     }
     return () => {
-      if(timer) clearInterval(timer);
+      if (timer) clearInterval(timer);
     }
   }, [elapsedTime, startedAt, stoppedAt])
 

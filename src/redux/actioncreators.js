@@ -1,6 +1,5 @@
 import * as ActionTypes from './actiontypes';
 
-
 /**
  * board
  */
@@ -50,8 +49,8 @@ export const setPlayerNames = (firstPlayerName, secondPlayerName) => ({
   secondPlayerName
 })
 
-export const startGame = (firstPlayerName, secondPlayerName, boardSize) => (dispatch) => {
-  dispatch(setPlayerNames(firstPlayerName, secondPlayerName));
+export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, secondPlayerType, boardSize) => (dispatch) => {
+  dispatch(setPlayerNames(firstPlayerName, secondPlayerName, firstPlayerType, secondPlayerType));
   dispatch(createBoard(boardSize));
   dispatch(startTimer());
 }
