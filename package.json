@@ -12,8 +12,6 @@
     "@testing-library/user-event": "^12.1.10",
     "concurrently": "^5.3.0",
     "datastructures-js": "^8.1.0",
-    "electron": "^10.1.5",
-    "electron-builder": "^22.9.1",
     "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -26,14 +24,18 @@
     "wait-on": "^5.2.0",
     "web-vitals": "^0.2.4"
   },
+  "devDependencies": {
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-package": "./node_modules/.bin/electron-builder -c.extraMetadata.main=build/start-electron.js",
-    "preelectron-package": "npm run build"
+    "preelectron-package": "yarn build"
   },
   "eslintConfig": {
     "extends": [

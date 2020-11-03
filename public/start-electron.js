@@ -8,7 +8,7 @@ const path = require('path'),
 let mainWindow;
    
 const createWindow = () => {
-  mainWindow = new BrowserWindow({ width: 480, height: 320 })
+  mainWindow = new BrowserWindow({ width: 900, height: 680})
   const appUrl = isDev ? 'http://localhost:3000' :
     `file://${path.join(__dirname, '../build/index.html')}`
   mainWindow.loadURL(appUrl)
