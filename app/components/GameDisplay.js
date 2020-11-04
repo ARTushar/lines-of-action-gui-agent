@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles, Paper, TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
-import { finishGame, stopTimer } from '../redux/actioncreators';
+import { changeHasBotMove, finishGame, sendBoardToBot, stopTimer } from '../redux/actioncreators';
 import { getWinner } from '../game-logic/winningLogic';
 // import { startTimer } from '../redux/actioncreators';
 import fs from 'fs';
@@ -10,6 +10,8 @@ import path from 'path';
 const text = fs.readFileSync(
   path.join(__dirname, 'bot', 'temp.txt')
 );
+
+console.log(text + ' \n');
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,8 +38,10 @@ function GameDisplay({ setIsOpen }) {
   const { firstPlayerName, secondPlayerName } = useSelector(state => state.game)
   const [elapsedTime, setElapsedTime] = useState(0);
 
-  const { board, currentPlayer, latestBlackMove, latestWhiteMove, totalBlackCells, totalWhiteCells } = useSelector(state => state.board);
-  const winner = useSelector(state => state.game.winner);
+  const { board, currentPlayer, latestBlackMove, latestWhiteMove,
+    totalBlackCells, totalWhiteCells } = useSelector(state => state.board);
+  const { winner, firstPlayerType, secondPlayerType,
+     subProcess1, subProcess2, hasBot1Move, hasBot2Move } = useSelector(state => state.game);
   const { startedAt, stoppedAt } = useSelector(state => state.timer);
 
   const dispatch = useDispatch();
@@ -55,27 +59,40 @@ function GameDisplay({ setIsOpen }) {
   }
 
   useEffect(() => {
-    if (!latestBlackMove || !latestWhiteMove) return;
-    let lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells;
-    if (currentPlayer === 'white') {
-      lastMoveByCurrent = latestBlackMove;
-      currentCells = totalBlackCells;
-      lastMoveByOpposition = latestWhiteMove;
-      oppostionCells = totalWhiteCells;
-    } else {
-      lastMoveByCurrent = latestWhiteMove;
-      currentCells = totalWhiteCells;
-      lastMoveByOpposition = latestBlackMove;
-      oppostionCells = totalBlackCells;
+    if (latestBlackMove && latestWhiteMove) {
+      let lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells;
+      if (currentPlayer === 'white') {
+        lastMoveByCurrent = latestBlackMove;
+        currentCells = totalBlackCells;
+        lastMoveByOpposition = latestWhiteMove;
+        oppostionCells = totalWhiteCells;
+      } else {
+        lastMoveByCurrent = latestWhiteMove;
+        currentCells = totalWhiteCells;
+        lastMoveByOpposition = latestBlackMove;
+        oppostionCells = totalBlackCells;
+      }
+
+      let winnerPlayer = getWinner(board, lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells)
+      console.log(winnerPlayer);
+      if (winnerPlayer) {
+        dispatch(stopTimer());
+        dispatch(finishGame(winnerPlayer, elapsedTime))
+        return;
+      }
     }
 
-    let winner = getWinner(board, lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells)
-    console.log(winner);
-    if (winner) {
-      dispatch(stopTimer());
-      dispatch(finishGame(winner, elapsedTime))
+    // send bots the board
+    if (firstPlayerType === 'bot' && currentPlayer === 'black' && !hasBot1Move) {
+      sendBoardToBot(board, subProcess1);
+      dispatch(changeHasBotMove('hasBot1Move'))
     }
-  }, [currentPlayer])
+    if (secondPlayerType === 'bot' && currentPlayer === 'white' && !hasBot2Move) {
+      sendBoardToBot(board, subProcess2);
+      dispatch(changeHasBotMove('hasBot2Move'))
+    }
+
+  }, [currentPlayer, firstPlayerType, secondPlayerType])
 
   useEffect(() => {
     let timer;

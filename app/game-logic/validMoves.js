@@ -148,3 +148,13 @@ export const getValidMoves = (row, col, board) => {
 
   return validMoves;
 }
+
+
+export const isValidMove = (validMoves, move, type) => {
+  for(const m of validMoves){
+    if(m.row === move.row && m.col === move.col){
+      return true;
+    }
+  }
+  return false;
+}

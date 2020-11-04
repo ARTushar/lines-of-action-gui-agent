@@ -12,10 +12,11 @@ function Board() {
 
   for(let i = 0; i < board.length; i++){
     boardUI.push(
-      <Grid item>
+      <Grid item key={i}>
       <ButtonGroup  color='primary'>
         {board[i].map((val, j) =>(
           <Cell type={val.type}
+            key={board.length * i + j}
             row={i}
             col={j}
           />
@@ -29,8 +30,6 @@ function Board() {
     <div style={{
     }}>
       <Grid 
-        container 
-        justify="center"
       >
       {boardUI}
       </Grid>

@@ -49,11 +49,6 @@ function GameStart({isOpen, setIsOpen}) {
     setIsOpen(false);
   }
 
-  const handleFileUpload = (e) => {
-    e.preventDefault();
-    console.log(e.target.files[0]);
-  }
-
   return (
     <Modal
       open={isOpen}

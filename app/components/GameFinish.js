@@ -1,6 +1,7 @@
 import { Button, Grid, makeStyles, Modal, Paper, } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { stopTimer } from '../redux/actioncreators';
 
 
 const getWinnerName = (winner, firstPlayerName, secondPlayerName) => {
@@ -33,8 +34,12 @@ function GameFinish({setGameStart}) {
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
 
-  const { winner, firstPlayerName, secondPlayerName, totalTimeTaken } = 
+  const { winner, firstPlayerName, secondPlayerName, totalTimeTaken } =
     useSelector(state => state.game)
+
+  const dispatch = useDispatch();
+
+  const errMess = useSelector(state => state.board.errMess);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,10 +48,14 @@ function GameFinish({setGameStart}) {
   }
 
   useEffect(() => {
-    if(winner.length){
+    if (winner.length) {
       setIsOpen(true);
     }
-  }, [winner])
+    if (errMess && errMess.length) {
+      setIsOpen(true);
+      dispatch(stopTimer());
+    }
+  }, [winner, errMess])
 
   return (
     <Modal
@@ -55,10 +64,16 @@ function GameFinish({setGameStart}) {
     >
       <Paper elevation={3} className={classes.paper}>
         <Grid container direction="row" justify="center" alignItems="center">
-          <h2> {getWinnerName(winner, firstPlayerName, secondPlayerName) + ' WON!!!!'}</h2>
-          <Grid item align="center">
-            <h4>Total {totalTimeTaken} seconds elapsed!!</h4>
-          </Grid>
+          {errMess && errMess.length ? (
+            <h2 style={{ textAlign: 'center' }}>{errMess}</h2>
+          ) : (
+              <>
+                <h2> {getWinnerName(winner, firstPlayerName, secondPlayerName) + ' WON!!!!'}</h2>
+                <Grid item align="center">
+                  <h4>Total {totalTimeTaken} seconds elapsed!!</h4>
+                </Grid>
+              </>
+            )}
           <form
             className={classes.root}
             onSubmit={handleSubmit}
