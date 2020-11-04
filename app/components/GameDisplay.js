@@ -3,15 +3,7 @@ import { Grid, makeStyles, Paper, TextField, Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { changeHasBotMove, finishGame, sendBoardToBot, stopTimer } from '../redux/actioncreators';
 import { getWinner } from '../game-logic/winningLogic';
-// import { startTimer } from '../redux/actioncreators';
-import fs from 'fs';
-import path from 'path';
 
-const text = fs.readFileSync(
-  path.join(__dirname, 'bot', 'temp.txt')
-);
-
-console.log(text + ' \n');
 
 const useStyles = makeStyles((theme) => ({
   root: {

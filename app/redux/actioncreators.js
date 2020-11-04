@@ -3,6 +3,7 @@ import { spawn } from 'child_process';
 import path from 'path';
 import { createBoard, getBoardForBot } from '../game-logic/boardUtils';
 import { getValidMoves, isValidMove } from '../game-logic/validMoves';
+import { getBotFileCommands } from '../game-logic/ReadBotFiles';
 /**
  * board
  */
@@ -94,12 +95,14 @@ export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, se
 
   const board = createBoard(boardSize);
   console.log(firstPlayerType, secondPlayerType);
+  const fileCommands = getBotFileCommands(path.join(__dirname, 'bot'));
+
   let subProcess1, subProcess2;
   if (firstPlayerType === 'bot') {
     subProcess1 = spawn(
-      path.join(__dirname, 'bot', 'player1'),
+      fileCommands.player1,
       ['b', boardSize.toString()]
-    )
+    );
     console.log('created the first subprocess');
    
     subProcess1.stdout.on('data', (data) => {
@@ -120,7 +123,7 @@ export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, se
     console.log('created the second subprocess');
 
     subProcess2 = spawn(
-      path.join(__dirname, 'bot', 'player1'),
+      fileCommands.player2,
       ['r', boardSize.toString()]
     )
 
