@@ -70,7 +70,6 @@ export const setGame = (firstPlayerName, secondPlayerName, firstPlayerType, seco
 })
 
 const handleOutputBot = (data, board, type) => (dispatch) => {
-  console.log(data.toString());
   let output = data.toString().split(/[ \t]+/).map(val => parseInt(val));
   let selectedCell, moveRow, moveCol;
   if (output.length === 4) {
@@ -80,21 +79,18 @@ const handleOutputBot = (data, board, type) => (dispatch) => {
     dispatch(setSelectedCell(selectedCell));
     dispatch(move(moveRow, moveCol));
   } else {
-    console.log(output.length);
-    console.log('invalid output format');
+    dispatch(setErrMess('Invalid Output format from AI agent program'));
   }
 }
 
 export const sendBoardToBot = (board, subProcess) => {
   const botBoard = getBoardForBot(board);
-  console.log(botBoard);
   subProcess.stdin.write(botBoard);
 }
 
 export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, secondPlayerType, boardSize) => (dispatch) => {
 
   const board = createBoard(boardSize);
-  console.log(firstPlayerType, secondPlayerType);
   const fileCommands = getBotFileCommands(path.join(__dirname, 'bot'));
 
   let subProcess1, subProcess2;
@@ -103,7 +99,6 @@ export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, se
       fileCommands.player1,
       ['b', boardSize.toString()]
     );
-    console.log('created the first subprocess');
    
     subProcess1.stdout.on('data', (data) => {
       dispatch(handleOutputBot(data, board, 'black'));
@@ -120,8 +115,6 @@ export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, se
   }
 
   if (secondPlayerType === 'bot') {
-    console.log('created the second subprocess');
-
     subProcess2 = spawn(
       fileCommands.player2,
       ['r', boardSize.toString()]

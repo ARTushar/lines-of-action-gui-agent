@@ -44,7 +44,6 @@ function GameStart({isOpen, setIsOpen}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, secondName, boardSize);
     dispatch(startGame(firstName, secondName, firstType, secondType, boardSize));
     setIsOpen(false);
   }

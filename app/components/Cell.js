@@ -68,7 +68,6 @@ function Cell(props) {
       dispatch(move(props.row, props.col));
     } else{
     const availableMoves = getValidMoves(props.row, props.col, board);
-    console.log(availableMoves);
     dispatch(highlightAvailableMoves(availableMoves, {
       row: props.row,
       col: props.col

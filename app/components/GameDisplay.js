@@ -66,7 +66,6 @@ function GameDisplay({ setIsOpen }) {
       }
 
       let winnerPlayer = getWinner(board, lastMoveByCurrent, lastMoveByOpposition, currentCells, oppostionCells)
-      console.log(winnerPlayer);
       if (winnerPlayer) {
         dispatch(stopTimer());
         dispatch(finishGame(winnerPlayer, elapsedTime))

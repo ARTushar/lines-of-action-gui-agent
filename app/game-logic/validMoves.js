@@ -38,7 +38,6 @@ const getTotalActiveCells = (board, row, col) => {
       rightDiagonalCount += 1;
     }
   }
-  console.log(rowCount, colCount, leftDiagonalCount, rightDiagonalCount);
 
   return { rowCount, colCount, leftDiagonalCount, rightDiagonalCount }
 
