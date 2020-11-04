@@ -35,7 +35,6 @@ function GameDisplay({ setIsOpen }) {
   const { winner, firstPlayerType, secondPlayerType,
      subProcess1, subProcess2, hasBot1Move, hasBot2Move } = useSelector(state => state.game);
   const { startedAt, stoppedAt } = useSelector(state => state.timer);
-
   const dispatch = useDispatch();
   const minute = Math.floor(elapsedTime / 60);
   const sec = elapsedTime % 60;
@@ -48,6 +47,7 @@ function GameDisplay({ setIsOpen }) {
     e.preventDefault();
     setIsOpen(true);
     dispatch(stopTimer());
+    dispatch(finishGame('', 0));
   }
 
   useEffect(() => {

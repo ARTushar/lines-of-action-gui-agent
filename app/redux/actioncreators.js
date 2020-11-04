@@ -91,7 +91,7 @@ export const sendBoardToBot = (board, subProcess) => {
 export const startGame = (firstPlayerName, secondPlayerName, firstPlayerType, secondPlayerType, boardSize) => (dispatch) => {
 
   const board = createBoard(boardSize);
-  const fileCommands = getBotFileCommands(path.join(__dirname, 'bot'));
+  const fileCommands = getBotFileCommands(path.join("app", 'bot'));
 
   let subProcess1, subProcess2;
   if (firstPlayerType === 'bot') {
