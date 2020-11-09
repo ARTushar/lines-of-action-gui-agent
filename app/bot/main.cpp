@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
 
   Player *player = new Player(myType, boardSize, 4, 5);
 
-  player->logFile << "hi new 2" << endl;
-
   while (true)
   {
     player->setBoard();
