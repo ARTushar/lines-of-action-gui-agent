@@ -27,8 +27,10 @@ export const getBotFileCommands = (directory) => {
     const ext = path.extname(file);
     if (allowableFileTypes.indexOf(ext) !== -1 && file.startsWith('player1')) {
       executableCommands.player1 = getCommand(directory, file, ext);
+      console.log(executableCommands.player1);
     } else if (allowableFileTypes.indexOf(ext) !== -1 && file.startsWith('player2')) {
       executableCommands.player2 = getCommand(directory, file, ext);
+      console.log(executableCommands.player2);
     }
   }
   return executableCommands;

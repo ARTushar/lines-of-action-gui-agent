@@ -25,3 +25,11 @@ log.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+app/bot/*.cpp
+app/bot/*.txt
+app/bot/*.log
+
+log*
+
