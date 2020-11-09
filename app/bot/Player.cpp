@@ -79,7 +79,7 @@ public:
 class Player
 {
 
-public:
+private:
   char myType;
   char oppositionType;
   int maxAllowedTime;
